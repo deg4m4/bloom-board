@@ -1,42 +1,123 @@
 /* eslint-disable */
 
-import { HiX } from "react-icons/hi";
-import Links from "./components/Links";
+import { AnimatePresence, motion } from "framer-motion"
 
-import routes from "../../routes";
+type SideBarProp = {
+  compact?: boolean
+  setCompact?: any
+  children: React.ReactNode
+}
 
-const Sidebar = (props: {
-  open: boolean;
-  onClose: React.MouseEventHandler<HTMLSpanElement>;
-}) => {
-  const { open, onClose } = props;
+function SideBar({ compact, setCompact, children }: SideBarProp) {
+
   return (
-    <div
-      className={`!border-r-[1px] border-gray-200 dark:border-[#ffffff33] duration-175 linear fixed !z-50 flex min-h-full flex-col bg-white pb-10 shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0 ${
-        open ? "translate-x-0" : "-translate-x-96"
-      }`}
+    <motion.div
+      variants={{
+        compact: {
+          width: "66px",
+          transition: {
+
+            duration: 0.2,
+          },
+        },
+        notCompact: {
+          width: "292px",
+          transition: {
+
+            duration: 0.2,
+          },
+        },
+      }}
+      animate={compact ? "compact" : "notCompact"}
+      initial={compact ? "compact" : "notCompact"}
+      className={`flex flex-col fixed h-[100vh] bg-white dark:!bg-navy-800 !border-r-[1px] border-gray-200 dark:border-[#ffffff33]`}
     >
-      <span
-        className="absolute top-4 right-4 block cursor-pointer xl:hidden"
-        onClick={onClose}
-      >
-        <HiX />
-      </span>
 
-      <div className={`mx-[56px] mt-[50px] flex items-center`}>
-        <div className="mt-1 ml-1 h-2.5 font-poppins text-[26px] font-bold uppercase text-navy-700 dark:text-white">
-          Horizon <span className="font-medium">FREE</span>
-        </div>
+      <div className={`brand-logo text-center my-6 text-navy-700 dark:text-white ${compact ? "hidden" : ""}`} onClick={() => setCompact(true)}>
+        <span className="text-2xl">
+          <span className="font-bold">BLOOM</span>
+          &nbsp;
+          <span className="font-normal">STYLE</span>
+        </span>
       </div>
-      <div className="mt-[58px] mb-7 h-px bg-gray-300 dark:bg-white/30" />
-      {/* Nav item */}
 
-      <ul className="mb-auto pt-1">
-        <Links routes={routes} />
-      </ul>
+      <div className={`brand-logo text-center my-6 text-navy-700 dark:text-white ${compact ? "" : "hidden"}`} onClick={() => setCompact(false)}>
+        <span className="text-2xl">
+          <span className="font-bold">B</span>
+          &nbsp;
+          <span className="font-normal">S</span>
+        </span>
+      </div>
 
+      <div className="bg-gray-200 dark:bg-[#ffffff33]" style={{
+        width: "100%",
+        height: "1px",
+      }}></div>
+
+      <div className="links overflow-auto hidescroll">
+        {children}
+      </div>
+    </motion.div>
+  )
+}
+
+type NavLinkProp = {
+  active: boolean,
+  name: string,
+  icon: React.ReactNode,
+  compact?: boolean
+}
+
+function NavLink({ active, name, icon, compact }: NavLinkProp) {
+  return (
+    <div>
+      <a href="#" className={`w-[full] group flex h-[42px] ${compact ? "pl-6" : "pl-8"} li transition-all hover:bg-gray-100 dark:hover:bg-navy-700 ${active ? "active bg-gray-50 dark:bg-navy-700" : ""}`} >
+        <span className="text-[18px] my-auto text-navy-700 dark:text-white mr-4 transition-all ">
+          {icon}
+        </span>
+        <AnimatePresence mode="wait">
+          {!compact &&
+            <motion.span
+
+              initial={{
+                width: "auto",
+              }}
+
+              animate={{
+                width: "auto",
+                transition: {
+                  width: {
+                    duration: 0.2,
+                  },
+                  opacity: {
+                    duration: 0.2,
+                    delay: 0.15,
+                  },
+                },
+              }}
+              exit={{
+                width: 0,
+                opacity: 0,
+                transition: {
+                  width: {
+                    duration: 0.1,
+                  },
+                  opacity: {
+                    duration: 0.2,
+                  },
+                },
+              }}
+
+              className="text-[16px] font-medium my-auto mr-auto text-navy-700 dark:text-white transition-all"
+            >
+              {name}
+            </motion.span>}
+        </AnimatePresence>
+        <div className={`hidden group-[.active]:block w-1 h-full bg-brand-400 dark:bg-brand-600 rounded-full ${compact ? "ml-auto" : ""}`}></div>
+      </a>
     </div>
-  );
-};
+  )
+}
 
-export default Sidebar;
+
+export { SideBar, NavLink };
