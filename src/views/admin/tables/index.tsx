@@ -1,11 +1,11 @@
 import tableDataCheck from "./variables/tableDataCheck";
-import CheckTable from "./components/CheckTable";
+import Table from "./components/Table";
 
 const Tables = () => {
   return (
     <div>
       <div className="mt-5">
-        <CheckTable tableData={tableDataCheck} />
+        <Table tableData={tableDataCheck} />
       </div>
 
     </div>
