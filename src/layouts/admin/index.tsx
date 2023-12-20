@@ -33,7 +33,7 @@ export default function Admin(props: { [x: string]: any }) {
     }
     return activeRoute;
   };
-  const getActiveNavbar = (routes: RoutesType[]): string | boolean => {
+  const getActiveNavbar = (routes: RoutesType[]): string | boolean | undefined => {
     let activeNavbar = false;
     for (let i = 0; i < routes.length; i++) {
       if (
@@ -64,7 +64,7 @@ export default function Admin(props: { [x: string]: any }) {
       <div className="h-full w-full bg-lightPrimary dark:!bg-navy-900">
         {/* Main Content */}
         <main
-          className={` h-full flex-none transition-all xl:ml-[292px]`}
+          className={` h-full flex-none transition-all xl:ml-[293px]`}
         >
           {/* Routes */}
           <div className="h-full">
