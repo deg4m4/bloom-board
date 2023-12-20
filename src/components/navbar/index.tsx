@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Dropdown from "../../components/dropdown";
 import { FiAlignJustify } from "react-icons/fi";
 import { Link } from "react-router-dom";
@@ -20,8 +20,29 @@ const Navbar = (props: {
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = React.useState(false);
 
+  let [headerStick, setHeaderStick] = useState(false)
+
+
+  const scrollHeaderEvent = (e: Event) => {
+    const window = e.currentTarget as Window
+    let top = window.scrollY
+
+    setHeaderStick(top >= 90)
+
+  }
+
+  useEffect(() => {
+
+    window.addEventListener("scroll", scrollHeaderEvent)
+
+    return () => {
+      window.removeEventListener("scroll", scrollHeaderEvent)
+    }
+
+  }, [])
+
   return (
-    <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
+    <nav className={`sticky top-0 z-40 flex flex-row flex-wrap items-center justify-between ${headerStick ? " bg-white !border-b-[1px] border-gray-200" : "bg-lightPrimary "} p-2 dark:${headerStick ? "!bg-navy-800" : "!bg-navy-900"} dark:${headerStick? "border-[#ffffff33] " : ""}`}>
       <div className="ml-[6px]">
         <div className="h-6 w-[224px] pt-1">
           <a
