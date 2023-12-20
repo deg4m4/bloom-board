@@ -13,7 +13,7 @@ const tableDataCheck: RowObj[] = [
 		date: '12 Jan 2021',
 	},
 	{
-		name: [ 'Horizon UI Free', true ],
+		name: [ 'Horizon UI Free', false ],
 		quantity: 1485,
 		progress: '10.8%',
 		date: '21 Feb 2021',
