@@ -4,6 +4,7 @@ import Checkbox from "../../../../components/checkbox";
 import Card from "../../../../components/card";
 import InputField from "../../../../components/fields/InputField";
 import { Pagenation, TBody, THeade, Table, Td, Th, Tr } from "../../../../components/table/Table";
+import Spinner from "../../../../components/spinner/spinner";
 
 type RowObj = {
   name: [string, boolean];
@@ -17,10 +18,19 @@ function TableCon(props: { tableData: any }) {
   const { tableData: tableDataMain } = props;
   const [data, setData] = useState([])
   const [page, setPage] = useState(1)
-  const totalPage = Math.ceil(tableDataMain.length / 3)
+
+  const perPage = 6
+  const totalPage = Math.ceil(tableDataMain.length / perPage)
+
+  const [loadOrders, setLoadOrders] = useState(false)
 
   useEffect(() => {
-    setData(tableDataMain.slice(3 * (page - 1), (3 * page)))
+    setLoadOrders(true)
+    setData([])
+    setTimeout(() => {
+      setData(tableDataMain.slice(perPage * (page - 1), (perPage * page)))
+      setLoadOrders(false)
+    }, 1000);
   }, [page])
 
   return (
@@ -73,6 +83,7 @@ function TableCon(props: { tableData: any }) {
           </Tr>
 
         </THeade>
+
         <TBody>
 
           {data.map((r: RowObj, r_i: number) => {
@@ -138,7 +149,15 @@ function TableCon(props: { tableData: any }) {
           })}
 
         </TBody>
+
       </Table>
+
+      {
+        loadOrders &&
+        <div className="h-[500px] w-full flex">
+          <Spinner />
+        </div>
+      }
 
       <Pagenation
         totalPage={totalPage}
