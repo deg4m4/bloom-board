@@ -1,7 +1,10 @@
 import tableDataCheck from "./variables/tableDataCheck";
 import Table from "./components/Table";
 
-const Tables = () => {
+const Tables =  ({setName}: {setName: Function})=> {
+
+  setName("Tables")
+
   return (
     <div>
       <div className="mt-5">

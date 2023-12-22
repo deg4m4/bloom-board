@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import { AnimatePresence, motion } from "framer-motion"
+import { Link } from "react-router-dom"
 
 type SideBarProp = {
   compact?: boolean
@@ -65,13 +66,14 @@ type NavLinkProp = {
   active: boolean,
   name: string,
   icon: React.ReactNode,
-  compact?: boolean
+  compact?: boolean,
+  to?: string,
 }
 
-function NavLink({ active, name, icon, compact }: NavLinkProp) {
+function NavLink({ active, name, icon, compact, to = "#" }: NavLinkProp) {
   return (
     <div>
-      <a href="#" className={`w-[full] group flex h-[42px] ${compact ? "pl-6" : "pl-8"} li transition-all hover:bg-gray-100 dark:hover:bg-navy-700 ${active ? "active bg-gray-50 dark:bg-navy-700" : ""}`} >
+      <Link to={to} className={`w-[full] group flex h-[42px] ${compact ? "pl-6" : "pl-8"} li transition-all hover:bg-gray-100 dark:hover:bg-navy-700 ${active ? "active bg-gray-50 dark:bg-navy-700" : ""}`} >
         <span className="text-[18px] my-auto text-navy-700 dark:text-white mr-4 transition-all ">
           {icon}
         </span>
@@ -114,7 +116,7 @@ function NavLink({ active, name, icon, compact }: NavLinkProp) {
             </motion.span>}
         </AnimatePresence>
         <div className={`hidden group-[.active]:block w-1 h-full bg-brand-400 dark:bg-brand-600 rounded-full ${compact ? "ml-auto" : ""}`}></div>
-      </a>
+      </Link>
     </div>
   )
 }

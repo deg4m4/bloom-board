@@ -15,7 +15,6 @@ import avatar from "../../assets/img/avatars/avatar4.png";
 const Navbar = (props: {
   onOpenSidenav: () => void;
   brandText: string;
-  secondary?: boolean | string;
 }) => {
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = React.useState(false);
@@ -44,25 +43,7 @@ const Navbar = (props: {
   return (
     <nav className={`sticky top-0 z-40 flex flex-row flex-wrap items-center justify-between ${headerStick ? " bg-white !border-b-[1px] border-gray-200" : "bg-lightPrimary "} p-2 dark:${headerStick ? "!bg-navy-800" : "!bg-navy-900"} dark:${headerStick? "border-[#ffffff33] " : ""}`}>
       <div className="ml-[6px]">
-        <div className="h-6 w-[224px] pt-1">
-          <a
-            className="text-sm font-normal text-navy-700 hover:underline dark:text-white dark:hover:text-white"
-            href=" "
-          >
-            Pages
-            <span className="mx-1 text-sm text-navy-700 hover:text-navy-700 dark:text-white">
-              {" "}
-              /{" "}
-            </span>
-          </a>
-          <Link
-            className="text-sm font-normal capitalize text-navy-700 hover:underline dark:text-white dark:hover:text-white"
-            to="#"
-          >
-            {brandText}
-          </Link>
-        </div>
-        <p className="shrink text-[33px] capitalize text-navy-700 dark:text-white">
+        <p className="shrink text-[33px] capitalize text-navy-700 dark:text-white" onClick={() => props.onOpenSidenav()}>
           <Link
             to="#"
             className="font-bold capitalize hover:text-navy-700 dark:hover:text-white"

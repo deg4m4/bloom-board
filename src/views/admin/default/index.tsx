@@ -14,7 +14,10 @@ import TaskCard from "../../../views/admin/default/components/TaskCard";
 import tableDataCheck from "./variables/tableDataCheck";
 import tableDataComplex from "./variables/tableDataComplex";
 
-const Dashboard = () => {
+const Dashboard = ({setName}: {setName: Function}) => {
+
+  setName("Dashboard")
+
   return (
     <div>
       {/* Card widget */}
